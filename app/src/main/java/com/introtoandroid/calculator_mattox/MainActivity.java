@@ -157,10 +157,8 @@ public class MainActivity extends AppCompatActivity {
         zero.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(inputString!= ""){
                    inputString = inputString + "0";
                    textView.setText(inputString);
-                }
             }
         });
         clearEverything.setOnClickListener(new View.OnClickListener() {
@@ -213,6 +211,13 @@ public class MainActivity extends AppCompatActivity {
                     firstOperand = inputString;
                     inputString = "";
                 }
+                else if (inputString != ""){
+                    secondOperand = inputString;
+                    inputString = "";
+                    firstOperand = onEquals(firstOperand, operator, secondOperand);
+                    operator = '+';
+                    textView.setText(firstOperand);
+                }
             }
         });
         minus.setOnClickListener(new View.OnClickListener() {
@@ -222,6 +227,13 @@ public class MainActivity extends AppCompatActivity {
                     operator = '-';
                     firstOperand = inputString;
                     inputString = "";
+                }
+                else if (inputString != ""){
+                    secondOperand = inputString;
+                    inputString = "";
+                    firstOperand = onEquals(firstOperand, operator, secondOperand);
+                    operator = '-';
+                    textView.setText(firstOperand);
                 }
             }
         });
@@ -233,6 +245,13 @@ public class MainActivity extends AppCompatActivity {
                     firstOperand = inputString;
                     inputString = "";
                 }
+                else if (inputString != ""){
+                    secondOperand = inputString;
+                    inputString = "";
+                    firstOperand = onEquals(firstOperand, operator, secondOperand);
+                    operator = '*';
+                    textView.setText(firstOperand);
+                }
             }
         });
         divide.setOnClickListener(new View.OnClickListener() {
@@ -242,6 +261,13 @@ public class MainActivity extends AppCompatActivity {
                     operator = '/';
                     firstOperand = inputString;
                     inputString = "";
+                }
+                else if (inputString != ""){
+                    secondOperand = inputString;
+                    inputString = "";
+                    firstOperand = onEquals(firstOperand, operator, secondOperand);
+                    operator = '/';
+                    textView.setText(firstOperand);
                 }
             }
         });
