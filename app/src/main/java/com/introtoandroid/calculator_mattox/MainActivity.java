@@ -1,5 +1,6 @@
 package com.introtoandroid.calculator_mattox;
 
+import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -43,7 +44,8 @@ public class MainActivity extends AppCompatActivity {
     private String firstOperand;
     private String secondOperand;
     private Character operator;
-    private Boolean hasDecimal;
+    private Character lastOperator;
+    private String returnedAnswer;
 
 
     @Override
@@ -86,8 +88,8 @@ public class MainActivity extends AppCompatActivity {
         secondOperand = null;
         operator = null;
 
-        operator = null;
-        hasDecimal = false;
+        returnedAnswer = null;
+        lastOperator = null;
 
         one.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,8 +157,10 @@ public class MainActivity extends AppCompatActivity {
         zero.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                inputString = inputString + "0";
-                textView.setText(inputString);
+                if(inputString!= ""){
+                   inputString = inputString + "0";
+                   textView.setText(inputString);
+                }
             }
         });
         clearEverything.setOnClickListener(new View.OnClickListener() {
@@ -167,7 +171,6 @@ public class MainActivity extends AppCompatActivity {
                 firstOperand = null;
                 secondOperand = null;
                 operator = null;
-                hasDecimal = false;
             }
         });
 //        clear.setOnClickListener(new View.OnClickListener() {
@@ -188,33 +191,24 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (inputString != "") {
-                    if(!hasDecimal) {
-                        Integer temp = Integer.valueOf(inputString);
-                        temp = temp * -1;
-                        inputString = temp.toString();
-                        textView.setText(inputString);
-                    }
-                    else{
                         Double temp = Double.valueOf(inputString);
                         temp = temp * -1;
                         inputString = temp.toString();
                         textView.setText(inputString);
                     }
                 }
-            }
         });
         decimal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 inputString = inputString + '.';
                 textView.setText(inputString);
-                hasDecimal = true;
             }
         });
         plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (operator == null) {
+                if (operator == null && inputString != "") {
                     operator = '+';
                     firstOperand = inputString;
                     inputString = "";
@@ -224,7 +218,7 @@ public class MainActivity extends AppCompatActivity {
         minus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (operator == null) {
+                if (operator == null && inputString != "") {
                     operator = '-';
                     firstOperand = inputString;
                     inputString = "";
@@ -234,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
         multiply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (operator == null) {
+                if (operator == null && inputString != "") {
                     operator = '*';
                     firstOperand = inputString;
                     inputString = "";
@@ -244,7 +238,7 @@ public class MainActivity extends AppCompatActivity {
         divide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (operator == null) {
+                if (operator == null && inputString != "") {
                     operator = '/';
                     firstOperand = inputString;
                     inputString = "";
@@ -254,10 +248,14 @@ public class MainActivity extends AppCompatActivity {
         equals.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(firstOperand != null && operator != null && secondOperand == null){
+                if(firstOperand != null && operator != null && secondOperand == null && inputString != "" && inputString != "."){
                     secondOperand = inputString;
                     inputString = "";
-                    textView.setText(onEquals(firstOperand, operator, secondOperand));
+                    returnedAnswer = onEquals(firstOperand, operator, secondOperand);
+                    textView.setText(returnedAnswer);
+                    lastOperator = operator;
+                    operator = null;
+                    firstOperand = null;
                 }
             }
         });
@@ -304,5 +302,37 @@ public class MainActivity extends AppCompatActivity {
 
         return returnString;
 
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if(inputString != ""){outState.putString("inputString", inputString);}
+        if(operator != null){outState.putString("operator", operator.toString());}
+        if(firstOperand != null){outState.putString("firstOperand", firstOperand);}
+        if(secondOperand != null){outState.putString("secondOperand", secondOperand);}
+
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        try{
+            inputString = savedInstanceState.getString("inputString");
+        }
+        catch(Exception e){inputString = "";}
+        try{
+            operator = savedInstanceState.getString("operator").charAt(0);
+        }
+        catch(Exception e){}
+        try{
+            firstOperand = savedInstanceState.getString("firstOperand");
+        }
+        catch(Exception e){}
+        try{
+            secondOperand = savedInstanceState.getString("secondOperand");
+        }
+        catch(Exception e){}
+        textView.setText(inputString);
     }
 }
