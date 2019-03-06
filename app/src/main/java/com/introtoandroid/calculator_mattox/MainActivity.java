@@ -2,9 +2,11 @@ package com.introtoandroid.calculator_mattox;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,14 +23,27 @@ public class MainActivity extends AppCompatActivity {
     private Button clear;
     private Button clearEverything;
     private Button plusMinus;
+    private Button decimal;
     private Button plus;
     private Button minus;
     private Button multiply;
     private Button divide;
     private Button equals;
-    private Button decimal;
+    private Button logBaseTen;
+    private Button logBaseTwo;
+    private Button pi;
+    private Button euler;
+    private Button inverse;
+    private Button squareRoot;
+    private Button squared;
+    private Button xPowerY;
+    private Button factorial;
     private TextView textView;
     private String inputString;
+    private String firstOperand;
+    private String secondOperand;
+    private Character operator;
+    private Boolean hasDecimal;
 
 
     @Override
@@ -54,8 +69,25 @@ public class MainActivity extends AppCompatActivity {
         divide = findViewById(R.id.division);
         equals = findViewById(R.id.equal);
         decimal = findViewById(R.id.decimal);
+        logBaseTen = findViewById(R.id.logBaseTen);
+        logBaseTwo = findViewById(R.id.logBaseTwo);
+        pi = findViewById(R.id.pi);
+        euler = findViewById(R.id.euler);
+        inverse = findViewById(R.id.inverse);
+        squareRoot = findViewById(R.id.squareRoot);
+        squared = findViewById(R.id.squared);
+        xPowerY = findViewById(R.id.raisedToPower);
+        factorial = findViewById(R.id.factorial);
+
         textView = findViewById(R.id.textView);
         inputString = "";
+
+        firstOperand = null;
+        secondOperand = null;
+        operator = null;
+
+        operator = null;
+        hasDecimal = false;
 
         one.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,16 +164,145 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 inputString = "";
                 textView.setText(inputString);
+                firstOperand = null;
+                secondOperand = null;
+                operator = null;
+                hasDecimal = false;
+            }
+        });
+//        clear.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //need to fix c button unintended clears
+//                hasDecimal = false;
+//                inputString = "";
+//                textView.setText(inputString);
+//                if(operator != null){
+//                    operator = null;
+//                }
+//
+//
+//            }
+//        });
+        plusMinus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (inputString != "") {
+                    if(!hasDecimal) {
+                        Integer temp = Integer.valueOf(inputString);
+                        temp = temp * -1;
+                        inputString = temp.toString();
+                        textView.setText(inputString);
+                    }
+                    else{
+                        Double temp = Double.valueOf(inputString);
+                        temp = temp * -1;
+                        inputString = temp.toString();
+                        textView.setText(inputString);
+                    }
+                }
+            }
+        });
+        decimal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                inputString = inputString + '.';
+                textView.setText(inputString);
+                hasDecimal = true;
+            }
+        });
+        plus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (operator == null) {
+                    operator = '+';
+                    firstOperand = inputString;
+                    inputString = "";
+                }
+            }
+        });
+        minus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (operator == null) {
+                    operator = '-';
+                    firstOperand = inputString;
+                    inputString = "";
+                }
+            }
+        });
+        multiply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (operator == null) {
+                    operator = '*';
+                    firstOperand = inputString;
+                    inputString = "";
+                }
+            }
+        });
+        divide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (operator == null) {
+                    operator = '/';
+                    firstOperand = inputString;
+                    inputString = "";
+                }
+            }
+        });
+        equals.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(firstOperand != null && operator != null && secondOperand == null){
+                    secondOperand = inputString;
+                    inputString = "";
+                    textView.setText(onEquals(firstOperand, operator, secondOperand));
+                }
             }
         });
 
 
 
+    }
+    public String onEquals(String operandOne, Character operator, String operandTwo){
+        double firstOperand = Double.parseDouble(operandOne);
+        double secondOperand = Double.parseDouble(operandTwo);
+        double answer = 0.0;
+        String returnString = "";
+        Log.v("zero", Double.toString(secondOperand));
 
+        switch (operator){
+            case '*':
+                answer = firstOperand * secondOperand;
+                break;
+            case '/':
+                if(secondOperand != 0.0){
+                    answer = firstOperand / secondOperand;
+                }
+                else{
+                    Toast toast = Toast.makeText(getApplicationContext(), "Can't divide by zero", Toast.LENGTH_SHORT);
+                    toast.show();
+                    clearEverything.performClick();
+                    return null;
+                }
+                break;
+            case '+':
+                answer = firstOperand + secondOperand;
+                break;
+            case '-':
+                answer = firstOperand - secondOperand;
+                break;
 
+        }
+        if(answer % 1 == 0){
+            returnString = Integer.toString((int) answer);
+        }
+        else{
+            returnString = Double.toString(answer);
+        }
 
-
-
+        return returnString;
 
     }
 }
