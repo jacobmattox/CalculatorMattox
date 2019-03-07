@@ -171,20 +171,17 @@ public class MainActivity extends AppCompatActivity {
                 operator = null;
             }
         });
-//        clear.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                //need to fix c button unintended clears
-//                hasDecimal = false;
-//                inputString = "";
-//                textView.setText(inputString);
-//                if(operator != null){
-//                    operator = null;
-//                }
-//
-//
-//            }
-//        });
+        clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(inputString.length() > 0){
+                    inputString = inputString.substring(0, inputString.length()-1);
+                    textView.setText(inputString);
+                }
+
+
+            }
+        });
         plusMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -281,7 +278,12 @@ public class MainActivity extends AppCompatActivity {
                     textView.setText(returnedAnswer);
                     lastOperator = operator;
                     operator = null;
-                    firstOperand = null;
+                    firstOperand = returnedAnswer;
+                }
+                else if(lastOperator != null && firstOperand != null){
+                    returnedAnswer = onEquals(firstOperand, lastOperator, secondOperand);
+                    textView.setText(returnedAnswer);
+                    firstOperand = returnedAnswer;
                 }
             }
         });
