@@ -1,6 +1,5 @@
 package com.introtoandroid.calculator_mattox;
 
-import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import java.lang.Math;
+import java.math.BigInteger;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private Button logBaseTwo;
     private Button pi;
     private Button euler;
-    private Button inverse;
+    private Button reciprocal;
     private Button squareRoot;
     private Button squared;
     private Button xPowerY;
@@ -75,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         logBaseTwo = findViewById(R.id.logBaseTwo);
         pi = findViewById(R.id.pi);
         euler = findViewById(R.id.euler);
-        inverse = findViewById(R.id.inverse);
+        reciprocal = findViewById(R.id.reciprocal);
         squareRoot = findViewById(R.id.squareRoot);
         squared = findViewById(R.id.squared);
         xPowerY = findViewById(R.id.raisedToPower);
@@ -200,6 +201,110 @@ public class MainActivity extends AppCompatActivity {
                 textView.setText(inputString);
             }
         });
+        factorial.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(inputString != "" && Double.parseDouble(inputString) % 1 == 0 && Double.parseDouble(inputString) > 0){
+                    inputString = factorial(inputString);
+                    textView.setText(inputString);
+                }
+                else{
+                    Toast toast = Toast.makeText(getApplicationContext(), "Can only use on positive integer", Toast.LENGTH_SHORT);
+                    clearEverything.performClick();
+                }
+            }
+        });
+        pi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                inputString = Double.toString(Math.PI);
+                textView.setText(inputString);
+            }
+        });
+        euler.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                inputString = Double.toString(Math.E);
+                textView.setText(inputString);
+            }
+        });
+        squared.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(inputString != ""){
+                    double s = Double.parseDouble(inputString);
+                    s = s * s;
+                    if(s % 1 == 0){
+                        inputString = Integer.toString((int) s);
+                    }
+                    else{
+                        inputString = Double.toString(s);
+                    }
+                }
+                textView.setText(inputString);
+            }
+        });
+        squareRoot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(inputString != ""){
+                    double s = Double.parseDouble(inputString);
+                    s = Math.pow(s, .5);
+                    if(s % 1 == 0){
+                        inputString = Integer.toString((int) s);
+                    }
+                    else{
+                        inputString = Double.toString(s);
+                    }
+                }
+                textView.setText(inputString);
+
+            }
+        });
+        reciprocal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(inputString != ""){
+                    double s = Double.parseDouble(inputString);
+                    s = 1/s;
+                    inputString = Double.toString(s);
+                }
+                textView.setText(inputString);
+            }
+        });
+        logBaseTwo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(inputString != ""){
+                    double s = Double.parseDouble(inputString);
+                    s = Math.log10(s)/Math.log10(2);
+                    if(s % 1 == 0){
+                        inputString = Integer.toString((int) s);
+                    }
+                    else{
+                        inputString = Double.toString(s);
+                    }
+                }
+                textView.setText(inputString);
+            }
+        });
+        logBaseTen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(inputString != ""){
+                    double s = Double.parseDouble(inputString);
+                    s = Math.log10(s);
+                    if(s % 1 == 0){
+                        inputString = Integer.toString((int) s);
+                    }
+                    else{
+                        inputString = Double.toString(s);
+                    }
+                }
+                textView.setText(inputString);
+
+            }
+        });
         plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -214,6 +319,11 @@ public class MainActivity extends AppCompatActivity {
                     firstOperand = onEquals(firstOperand, operator, secondOperand);
                     operator = '+';
                     textView.setText(firstOperand);
+                }
+                else if(operator == null && inputString ==""){
+                    operator = '+';
+                    lastOperator = null;
+                    secondOperand = null;
                 }
             }
         });
@@ -341,6 +451,14 @@ public class MainActivity extends AppCompatActivity {
         if(secondOperand != null){outState.putString("secondOperand", secondOperand);}
 
     }
+    public String factorial(String number){
+        int n = Integer.parseInt(number);
+        BigInteger numberToReturn = BigInteger.valueOf(1);
+        for(int i = 1; i <= n; i++){
+            numberToReturn = numberToReturn.multiply(BigInteger.valueOf(i));
+        }
+        return numberToReturn.toString();
+    }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
@@ -361,6 +479,9 @@ public class MainActivity extends AppCompatActivity {
             secondOperand = savedInstanceState.getString("secondOperand");
         }
         catch(Exception e){}
+        if(inputString == null){
+            inputString = "";
+        }
         textView.setText(inputString);
     }
 }
