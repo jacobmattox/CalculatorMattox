@@ -342,6 +342,11 @@ public class MainActivity extends AppCompatActivity {
                     operator = '-';
                     textView.setText(firstOperand);
                 }
+                else if(operator == null && inputString ==""){
+                    operator = '-';
+                    lastOperator = null;
+                    secondOperand = null;
+                }
             }
         });
         multiply.setOnClickListener(new View.OnClickListener() {
@@ -359,6 +364,11 @@ public class MainActivity extends AppCompatActivity {
                     operator = '*';
                     textView.setText(firstOperand);
                 }
+                else if(operator == null && inputString ==""){
+                    operator = '*';
+                    lastOperator = null;
+                    secondOperand = null;
+                }
             }
         });
         divide.setOnClickListener(new View.OnClickListener() {
@@ -375,6 +385,11 @@ public class MainActivity extends AppCompatActivity {
                     firstOperand = onEquals(firstOperand, operator, secondOperand);
                     operator = '/';
                     textView.setText(firstOperand);
+                }
+                else if(operator == null && inputString ==""){
+                    operator = '/';
+                    lastOperator = null;
+                    secondOperand = null;
                 }
             }
         });
