@@ -393,6 +393,29 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        xPowerY.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (operator == null && inputString != "") {
+                    operator = '^';
+                    firstOperand = inputString;
+                    inputString = "";
+                }
+                else if (inputString != ""){
+                    secondOperand = inputString;
+                    inputString = "";
+                    firstOperand = onEquals(firstOperand, operator, secondOperand);
+                    operator = '^';
+                    textView.setText(firstOperand);
+                }
+                else if(operator == null && inputString ==""){
+                    operator = '^';
+                    lastOperator = null;
+                    secondOperand = null;
+                }
+
+            }
+        });
         equals.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -444,6 +467,8 @@ public class MainActivity extends AppCompatActivity {
             case '-':
                 answer = firstOperand - secondOperand;
                 break;
+            case '^':
+                answer = Math.pow(firstOperand, secondOperand);
 
         }
         if(answer % 1 == 0){
