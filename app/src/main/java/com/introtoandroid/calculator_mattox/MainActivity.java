@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private Character operator;
     private Character lastOperator;
     private String returnedAnswer;
+    private String lastSecondOperand;
 
 
     @Override
@@ -91,81 +92,83 @@ public class MainActivity extends AppCompatActivity {
 
         returnedAnswer = null;
         lastOperator = null;
+        lastSecondOperand = null;
+
 
         one.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                inputString = inputString + "1";
+                inputString = inputString + getString(R.string.one);
                 textView.setText(inputString);
             }
         });
         two.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                inputString = inputString + "2";
+                inputString = inputString + getString(R.string.two);
                 textView.setText(inputString);
             }
         });
         three.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                inputString = inputString + "3";
+                inputString = inputString + getString(R.string.three);
                 textView.setText(inputString);
             }
         });
         four.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                inputString = inputString + "4";
+                inputString = inputString + getString(R.string.four);
                 textView.setText(inputString);
             }
         });
         five.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                inputString = inputString + "5";
+                inputString = inputString + getString(R.string.five);
                 textView.setText(inputString);
             }
         });
         six.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                inputString = inputString + "6";
+                inputString = inputString + getString(R.string.six);
                 textView.setText(inputString);
             }
         });
         seven.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                inputString = inputString + "7";
+                inputString = inputString + getString(R.string.seven);
                 textView.setText(inputString);
             }
         });
         eight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                inputString = inputString + "8";
+                inputString = inputString + getString(R.string.eight);
                 textView.setText(inputString);
             }
         });
         nine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                inputString = inputString + "9";
+                inputString = inputString + getString(R.string.nine);
                 textView.setText(inputString);
             }
         });
         zero.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                   inputString = inputString + "0";
+                   inputString = inputString + getString(R.string.zero);
                    textView.setText(inputString);
             }
         });
         clearEverything.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                inputString = "";
+                inputString = getString(R.string.empty);
                 textView.setText(inputString);
                 firstOperand = null;
                 secondOperand = null;
@@ -186,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
         plusMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (inputString != "") {
+                if (inputString != getString(R.string.empty)) {
                         Double temp = Double.valueOf(inputString);
                         temp = temp * -1;
                         inputString = temp.toString();
@@ -204,12 +207,12 @@ public class MainActivity extends AppCompatActivity {
         factorial.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(inputString != "" && Double.parseDouble(inputString) % 1 == 0 && Double.parseDouble(inputString) > 0){
+                if(inputString != getString(R.string.empty) && Double.parseDouble(inputString) % 1 == 0 && Double.parseDouble(inputString) > 0){
                     inputString = factorial(inputString);
                     textView.setText(inputString);
                 }
                 else{
-                    Toast toast = Toast.makeText(getApplicationContext(), "Can only use on positive integer", Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.ToastPositiveInteger), Toast.LENGTH_SHORT);
                     clearEverything.performClick();
                 }
             }
@@ -231,7 +234,7 @@ public class MainActivity extends AppCompatActivity {
         squared.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(inputString != ""){
+                if(inputString != getString(R.string.empty)){
                     double s = Double.parseDouble(inputString);
                     s = s * s;
                     if(s % 1 == 0){
@@ -247,7 +250,7 @@ public class MainActivity extends AppCompatActivity {
         squareRoot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(inputString != ""){
+                if(inputString != getString(R.string.empty)){
                     double s = Double.parseDouble(inputString);
                     s = Math.pow(s, .5);
                     if(s % 1 == 0){
@@ -264,7 +267,7 @@ public class MainActivity extends AppCompatActivity {
         reciprocal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(inputString != ""){
+                if(inputString != getString(R.string.empty)){
                     double s = Double.parseDouble(inputString);
                     s = 1/s;
                     inputString = Double.toString(s);
@@ -275,7 +278,7 @@ public class MainActivity extends AppCompatActivity {
         logBaseTwo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(inputString != ""){
+                if(inputString != getString(R.string.empty)){
                     double s = Double.parseDouble(inputString);
                     s = Math.log10(s)/Math.log10(2);
                     if(s % 1 == 0){
@@ -291,7 +294,7 @@ public class MainActivity extends AppCompatActivity {
         logBaseTen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(inputString != ""){
+                if(inputString != getString(R.string.empty)){
                     double s = Double.parseDouble(inputString);
                     s = Math.log10(s);
                     if(s % 1 == 0){
@@ -308,19 +311,19 @@ public class MainActivity extends AppCompatActivity {
         plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (operator == null && inputString != "") {
+                if (operator == null && inputString != getString(R.string.empty)) {
                     operator = '+';
                     firstOperand = inputString;
-                    inputString = "";
+                    inputString = getString(R.string.empty);
                 }
-                else if (inputString != ""){
+                else if (inputString != getString(R.string.empty)){
                     secondOperand = inputString;
-                    inputString = "";
+                    inputString = getString(R.string.empty);
                     firstOperand = onEquals(firstOperand, operator, secondOperand);
                     operator = '+';
                     textView.setText(firstOperand);
                 }
-                else if(operator == null && inputString ==""){
+                else if(operator == null && inputString == getString(R.string.empty)){
                     operator = '+';
                     lastOperator = null;
                     secondOperand = null;
@@ -330,19 +333,19 @@ public class MainActivity extends AppCompatActivity {
         minus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (operator == null && inputString != "") {
+                if (operator == null && inputString != getString(R.string.empty)) {
                     operator = '-';
                     firstOperand = inputString;
-                    inputString = "";
+                    inputString = getString(R.string.empty);
                 }
-                else if (inputString != ""){
+                else if (inputString != getString(R.string.empty)){
                     secondOperand = inputString;
-                    inputString = "";
+                    inputString = getString(R.string.empty);
                     firstOperand = onEquals(firstOperand, operator, secondOperand);
                     operator = '-';
                     textView.setText(firstOperand);
                 }
-                else if(operator == null && inputString ==""){
+                else if(operator == null && inputString == getString(R.string.empty)){
                     operator = '-';
                     lastOperator = null;
                     secondOperand = null;
@@ -352,19 +355,19 @@ public class MainActivity extends AppCompatActivity {
         multiply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (operator == null && inputString != "") {
+                if (operator == null && inputString != getString(R.string.empty)) {
                     operator = '*';
                     firstOperand = inputString;
-                    inputString = "";
+                    inputString = getString(R.string.empty);
                 }
-                else if (inputString != ""){
+                else if (inputString != getString(R.string.empty)){
                     secondOperand = inputString;
-                    inputString = "";
+                    inputString = getString(R.string.empty);
                     firstOperand = onEquals(firstOperand, operator, secondOperand);
                     operator = '*';
                     textView.setText(firstOperand);
                 }
-                else if(operator == null && inputString ==""){
+                else if(operator == null && inputString == getString(R.string.empty)){
                     operator = '*';
                     lastOperator = null;
                     secondOperand = null;
@@ -374,19 +377,19 @@ public class MainActivity extends AppCompatActivity {
         divide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (operator == null && inputString != "") {
+                if (operator == null && inputString != getString(R.string.empty)) {
                     operator = '/';
                     firstOperand = inputString;
-                    inputString = "";
+                    inputString = getString(R.string.empty);
                 }
-                else if (inputString != ""){
+                else if (inputString != getString(R.string.empty)){
                     secondOperand = inputString;
-                    inputString = "";
+                    inputString = getString(R.string.empty);
                     firstOperand = onEquals(firstOperand, operator, secondOperand);
                     operator = '/';
                     textView.setText(firstOperand);
                 }
-                else if(operator == null && inputString ==""){
+                else if(operator == null && inputString == getString(R.string.empty)){
                     operator = '/';
                     lastOperator = null;
                     secondOperand = null;
@@ -396,19 +399,19 @@ public class MainActivity extends AppCompatActivity {
         xPowerY.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (operator == null && inputString != "") {
+                if (operator == null && inputString != getString(R.string.empty)) {
                     operator = '^';
                     firstOperand = inputString;
-                    inputString = "";
+                    inputString = getString(R.string.empty);
                 }
-                else if (inputString != ""){
+                else if (inputString != getString(R.string.empty)){
                     secondOperand = inputString;
-                    inputString = "";
+                    inputString = getString(R.string.empty);
                     firstOperand = onEquals(firstOperand, operator, secondOperand);
                     operator = '^';
                     textView.setText(firstOperand);
                 }
-                else if(operator == null && inputString ==""){
+                else if(operator == null && inputString == getString(R.string.empty)){
                     operator = '^';
                     lastOperator = null;
                     secondOperand = null;
@@ -419,17 +422,19 @@ public class MainActivity extends AppCompatActivity {
         equals.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(firstOperand != null && operator != null && secondOperand == null && inputString != "" && inputString != "."){
+                if(firstOperand != null && operator != null && secondOperand == null && inputString != getString(R.string.empty) && inputString != "."){
                     secondOperand = inputString;
-                    inputString = "";
+                    inputString = getString(R.string.empty);
                     returnedAnswer = onEquals(firstOperand, operator, secondOperand);
                     textView.setText(returnedAnswer);
                     lastOperator = operator;
                     operator = null;
                     firstOperand = returnedAnswer;
+                    lastSecondOperand = secondOperand;
+                    secondOperand = null;
                 }
-                else if(lastOperator != null && firstOperand != null){
-                    returnedAnswer = onEquals(firstOperand, lastOperator, secondOperand);
+                else if(lastOperator != null && firstOperand != null && inputString == getString(R.string.empty)){
+                    returnedAnswer = onEquals(firstOperand, lastOperator, lastSecondOperand);
                     textView.setText(returnedAnswer);
                     firstOperand = returnedAnswer;
                 }
@@ -443,8 +448,7 @@ public class MainActivity extends AppCompatActivity {
         double firstOperand = Double.parseDouble(operandOne);
         double secondOperand = Double.parseDouble(operandTwo);
         double answer = 0.0;
-        String returnString = "";
-        Log.v("zero", Double.toString(secondOperand));
+        String returnString = getString(R.string.empty);
 
         switch (operator){
             case '*':
@@ -455,7 +459,7 @@ public class MainActivity extends AppCompatActivity {
                     answer = firstOperand / secondOperand;
                 }
                 else{
-                    Toast toast = Toast.makeText(getApplicationContext(), "Can't divide by zero", Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.toastDivideByZero), Toast.LENGTH_SHORT);
                     toast.show();
                     clearEverything.performClick();
                     return null;
@@ -482,22 +486,25 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        if(inputString != ""){outState.putString("inputString", inputString);}
-        if(operator != null){outState.putString("operator", operator.toString());}
-        if(firstOperand != null){outState.putString("firstOperand", firstOperand);}
-        if(secondOperand != null){outState.putString("secondOperand", secondOperand);}
-
-    }
     public String factorial(String number){
         int n = Integer.parseInt(number);
         BigInteger numberToReturn = BigInteger.valueOf(1);
+
         for(int i = 1; i <= n; i++){
             numberToReturn = numberToReturn.multiply(BigInteger.valueOf(i));
         }
         return numberToReturn.toString();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if(inputString != getString(R.string.empty)){outState.putString("inputString", inputString);}
+        if(operator != null){outState.putString("operator", operator.toString());}
+        if(firstOperand != null){outState.putString("firstOperand", firstOperand);}
+        if(secondOperand != null){outState.putString("secondOperand", secondOperand);}
+        outState.putString("currentScreen", textView.getText().toString());
+
     }
 
     @Override
@@ -506,9 +513,10 @@ public class MainActivity extends AppCompatActivity {
         try{
             inputString = savedInstanceState.getString("inputString");
         }
-        catch(Exception e){inputString = "";}
+        catch(Exception e){inputString = getString(R.string.empty);}
         try{
             operator = savedInstanceState.getString("operator").charAt(0);
+            Log.v("operator", operator.toString());
         }
         catch(Exception e){}
         try{
@@ -520,8 +528,14 @@ public class MainActivity extends AppCompatActivity {
         }
         catch(Exception e){}
         if(inputString == null){
-            inputString = "";
+            inputString = getString(R.string.empty);
         }
-        textView.setText(inputString);
+        String currentScreen = savedInstanceState.get("currentScreen").toString();
+        if(currentScreen != null){
+            textView.setText(currentScreen);
+        }
+        else {
+            textView.setText(inputString);
+        }
     }
 }
